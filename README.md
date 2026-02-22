@@ -1,3 +1,5 @@
+## Answers to Questions
+
 ###1. What is the difference between getElementById, getElementsByClassName, and querySelector / querySelectorAll?
    Ans: getElementById - শুধু একটা আইডি দিয়ে একটা এলিমেন্ট খুঁজে দেয়।
         getElementsByClassName - একই ক্লাস নামের সব এলিমেন্ট খুঁজে একটা HTMLCollection দেয়।
