@@ -25,14 +25,14 @@ function calculateCount() {
     // let total = allCardSection.children.length;
     total.innerText = currentTotal;
     // countJobs.innerText = allCardSection.children.length;
-    
+
 
     if (currentStatus === 'interview-filter-btn') {
         countJobs.innerText = `${interviewList.length} of ${currentTotal}`;
-    } 
+    }
     else if (currentStatus === 'rejected-filter-btn') {
         countJobs.innerText = `${rejectedList.length} of ${currentTotal}`;
-    } 
+    }
     else {
         countJobs.innerText = currentTotal;
     }
@@ -62,14 +62,14 @@ function toggleStyle(id) {
     selected.classList.remove('bg-white', 'text-[#64748B]')
     selected.classList.add('bg-[#3B82F6]', 'text-white')
 
-    if(id === 'interview-filter-btn'){
+    if (id === 'interview-filter-btn') {
         allCardSection.classList.add('hidden');
         filteredSection.classList.remove('hidden');
         renderInterview();
-    }else if(id === 'all-filter-btn'){
+    } else if (id === 'all-filter-btn') {
         allCardSection.classList.remove('hidden');
         filteredSection.classList.add('hidden');
-    }else if(id === 'rejected-filter-btn'){
+    } else if (id === 'rejected-filter-btn') {
         allCardSection.classList.add('hidden');
         filteredSection.classList.remove('hidden');
         renderRejected();
@@ -80,7 +80,7 @@ function toggleStyle(id) {
 
 mainContainer.addEventListener('click', function (event) {
 
-    
+
 
     // console.log(event.target.classList.contains('interview-btn'));
     if (event.target.classList.contains('interview-btn')) {
@@ -101,7 +101,7 @@ mainContainer.addEventListener('click', function (event) {
             status: 'INTERVIEW',
             notes
         }
-        
+
 
         // console.log(cardInfo);
 
@@ -112,13 +112,13 @@ mainContainer.addEventListener('click', function (event) {
 
         rejectedList = rejectedList.filter(item => item.cardH != cardInfo.cardH)
 
-        if(currentStatus === 'rejected-filter-btn'){
+        if (currentStatus === 'rejected-filter-btn') {
             renderRejected();
         }
         calculateCount();
-        
+
         // console.log(interviewList)
-    }else if (event.target.classList.contains('rejected-btn')) {
+    } else if (event.target.classList.contains('rejected-btn')) {
         // console.log(event.target.parentNode.parentNode)
         const parentNode = event.target.parentNode.parentNode;
         const cardH = parentNode.querySelector('.card-h').innerText;
@@ -136,7 +136,7 @@ mainContainer.addEventListener('click', function (event) {
             status: 'REJECTED',
             notes
         }
-        
+
 
         // console.log(cardInfo);
 
@@ -145,24 +145,24 @@ mainContainer.addEventListener('click', function (event) {
             rejectedList.push(cardInfo);
         }
 
-        
+
         interviewList = interviewList.filter(item => item.cardH != cardInfo.cardH)
 
-        if(currentStatus === 'interview-filter-btn'){
+        if (currentStatus === 'interview-filter-btn') {
             renderInterview();
         }
         calculateCount();
         // renderInterview();
-    
+
         // console.log(interviewList)
     }
-    else if(event.target.closest('#delete-btn')){
+    else if (event.target.closest('#delete-btn')) {
         const card = event.target.closest('.full-card');
-        if(!card){
+        if (!card) {
             return;
         }
         const title = card.querySelector('.card-h')?.innerText.trim();
-        if(!title){
+        if (!title) {
             return;
         }
 
@@ -171,15 +171,15 @@ mainContainer.addEventListener('click', function (event) {
         interviewList = interviewList.filter(item => item.cardH.trim() !== title);
         rejectedList = rejectedList.filter(item => item.cardH.trim() !== title);
 
-        if(currentStatus === 'interview-filter-btn'){
+        if (currentStatus === 'interview-filter-btn') {
             renderInterview();
-        } else if(currentStatus === 'rejected-filter-btn'){
+        } else if (currentStatus === 'rejected-filter-btn') {
             renderRejected();
         }
 
         calculateCount();
 
-        
+
     }
 })
 
@@ -189,6 +189,19 @@ mainContainer.addEventListener('click', function (event) {
 
 function renderInterview() {
     filteredSection.innerHTML = '';
+    if (interviewList.length === 0) {
+        filteredSection.innerHTML = `
+        <div class="text-center py-16 bg-white rounded-lg border border-[#E5E7EB] mx-auto">
+                <div class="mx-auto flex justify-center mb-6">
+                    <i class="fa-solid fa-file-lines text-8xl text-[#7DA8FF]"></i>
+                </div>
+                <h3 class="text-2xl font-semibold text-[#002C5C] mb-2">No jobs available</h3>
+                <p class="text-[#64748B] text-lg">
+                    Check back soon for new job opportunities
+                </p>
+            </div>
+        `
+    }
     for (let interview of interviewList) {
         console.log(interview)
         let div = document.createElement('div');
@@ -221,6 +234,19 @@ function renderInterview() {
 
 function renderRejected() {
     filteredSection.innerHTML = '';
+    if (rejectedList.length === 0) {
+        filteredSection.innerHTML = `
+        <div class="text-center py-16 bg-white rounded-lg border border-[#E5E7EB] mx-auto">
+                <div class="mx-auto flex justify-center mb-6">
+                    <i class="fa-solid fa-file-lines text-8xl text-[#7DA8FF]"></i>
+                </div>
+                <h3 class="text-2xl font-semibold text-[#002C5C] mb-2">No jobs available</h3>
+                <p class="text-[#64748B] text-lg">
+                    Check back soon for new job opportunities
+                </p>
+            </div>
+        `
+    }
     for (let rejected of rejectedList) {
         console.log(rejected)
         let div = document.createElement('div');
