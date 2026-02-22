@@ -15,25 +15,26 @@ const rejectedFilterBtn = document.getElementById('rejected-filter-btn');
 const filteredSection = document.getElementById('filtered-section');
 
 const allCardSection = document.getElementById('all-cards');
-const totalJobs = allCardSection.children.length;
+// const totalJobs = allCardSection.children.length;
 //  console.log(allCardSection.children.length)
 
 const mainContainer = document.querySelector('main');
 
 function calculateCount() {
+    const currentTotal = allCardSection.children.length;
     // let total = allCardSection.children.length;
-    total.innerText = allCardSection.children.length;
+    total.innerText = currentTotal;
     // countJobs.innerText = allCardSection.children.length;
     
 
     if (currentStatus === 'interview-filter-btn') {
-        countJobs.innerText = `${interviewList.length} of ${allCardSection.children.length}`;
+        countJobs.innerText = `${interviewList.length} of ${currentTotal}`;
     } 
     else if (currentStatus === 'rejected-filter-btn') {
-        countJobs.innerText = `${rejectedList.length} of ${allCardSection.children.length}`;
+        countJobs.innerText = `${rejectedList.length} of ${currentTotal}`;
     } 
     else {
-        countJobs.innerText = totalJobs;
+        countJobs.innerText = currentTotal;
     }
 
     interviewCount.innerText = interviewList.length;
