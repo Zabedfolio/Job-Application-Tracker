@@ -1,5 +1,6 @@
 let rejectedList = [];
 let interviewList = [];
+let currentStatus = 'all'
 
 let total = document.getElementById('total-count');
 let interviewCount = document.getElementById('interview-count');
@@ -17,10 +18,19 @@ const allCardSection = document.getElementById('all-cards');
 const mainContainer = document.querySelector('main');
 
 function calculateCount() {
+    let total = allCardSection.children.length;
     total.innerText = allCardSection.children.length;
-    // countJobs.innerText = allCardSection.children.length;
+    countJobs.innerText = allCardSection.children.length;
     interviewCount.innerText = interviewList.length;
     rejectedCount.innerText = rejectedList.length;
+
+    if (interviewFilterBtn.classList.contains('bg-[#3B82F6]')) {
+        countJobs.innerText = `${interviewList.length} of ${total}`;
+    } else if (rejectedFilterBtn.classList.contains('bg-[#3B82F6]')) {
+        countJobs.innerText = `${rejectedList.length} of ${total}`;
+    } else {
+        countJobs.innerText = total; 
+    }
 }
 
 calculateCount();
@@ -39,29 +49,48 @@ function toggleStyle(id) {
     rejectedFilterBtn.classList.add('bg-white', 'text-[#64748B]')
 
     const selected = document.getElementById(id);
+    currentStatus = id;
     selected.classList.remove('bg-white', 'text-[#64748B]')
     selected.classList.add('bg-[#3B82F6]', 'text-white')
+
+    if(id === 'interview-filter-btn'){
+        allCardSection.classList.add('hidden');
+        filteredSection.classList.remove('hidden');
+    }else if(id === 'all-filter-btn'){
+        allCardSection.classList.remove('hidden');
+        filteredSection.classList.add('hidden');
+    }else if(id === 'rejected-filter-btn'){
+        allCardSection.classList.add('hidden');
+        filteredSection.classList.remove('hidden');
+    }
+    calculateCount();
 
 }
 
 mainContainer.addEventListener('click', function (event) {
-    console.log(event.target.classList.contains('interview-btn'));
+
+    
+
+    // console.log(event.target.classList.contains('interview-btn'));
     if (event.target.classList.contains('interview-btn')) {
         // console.log(event.target.parentNode.parentNode)
         const parentNode = event.target.parentNode.parentNode;
         const cardH = parentNode.querySelector('.card-h').innerText;
         const cardP = parentNode.querySelector('.card-p').innerText;
         const jobType = parentNode.querySelector('.job-type').innerText;
-        const status = parentNode.querySelector('.status').innerText;
+        // const status = parentNode.querySelector('.status').innerText;
         const notes = parentNode.querySelector('.notes').innerText;
         // console.log(cardH, cardP, jobType, status, notes)
+
+        parentNode.querySelector('.status').innerText = 'INTERVIEW'
         const cardInfo = {
             cardH,
             cardP,
             jobType,
-            status,
+            status: 'INTERVIEW',
             notes
         }
+        
 
         // console.log(cardInfo);
 
@@ -70,7 +99,56 @@ mainContainer.addEventListener('click', function (event) {
             interviewList.push(cardInfo);
         }
 
+        rejectedList = rejectedList.filter(item => item.cardH != cardInfo.cardH)
+
+        if(currentStatus === 'rejected-filter-btn'){
+            renderRejected();
+        }
+        calculateCount();
+
+        
+
         renderInterview();
+        // console.log(interviewList)
+    }else if (event.target.classList.contains('rejected-btn')) {
+        // console.log(event.target.parentNode.parentNode)
+        const parentNode = event.target.parentNode.parentNode;
+        const cardH = parentNode.querySelector('.card-h').innerText;
+        const cardP = parentNode.querySelector('.card-p').innerText;
+        const jobType = parentNode.querySelector('.job-type').innerText;
+        // const status = parentNode.querySelector('.status').innerText;
+        const notes = parentNode.querySelector('.notes').innerText;
+        // console.log(cardH, cardP, jobType, status, notes)
+
+        parentNode.querySelector('.status').innerText = 'REJECTED'
+        const cardInfo = {
+            cardH,
+            cardP,
+            jobType,
+            status: 'REJECTED',
+            notes
+        }
+        
+
+        // console.log(cardInfo);
+
+        const rejectedExist = rejectedList.find(item => item.cardH === cardInfo.cardH);
+        if (!rejectedExist) {
+            rejectedList.push(cardInfo);
+        }
+
+        
+        interviewList = interviewList.filter(item => item.cardH != cardInfo.cardH)
+
+        if(currentStatus === 'interview-filter-btn'){
+            renderInterview();
+        }
+        calculateCount();
+
+        
+
+        // renderInterview();
+        renderRejected();
         // console.log(interviewList)
     }
 })
@@ -89,23 +167,56 @@ function renderInterview() {
         <div>
                 <div class="flex justify-between">
                     <div>
-                        <h2 class="text-[#002C5C] font-semibold text-[18px] pb-1 card-h">Mobile First Corp</h2>
-                        <p class="text-[#64748B] card-p">React Native Developer</p>
+                        <h2 class="text-[#002C5C] font-semibold text-[18px] pb-1 card-h">${interview.cardH}</h2>
+                        <p class="text-[#64748B] card-p">${interview.cardP}</p>
                     </div>
                     <button id="delete-btn" class="w-10 h-10 flex items-center justify-center border rounded-full border-[#F1F2F4]"><i class="fa-regular fa-trash-can text-[#64748B]"></i></button>
                 </div>
                 <div class="py-5 text-[#64748B]">
-                    <p class="job-type">Remote  • Full-time  • $130,000 - $175,000</p>
+                    <p class="job-type">${interview.jobType}</p>
                 </div>
                 <div class="mb-5">
-                    <p class="status py-2 px-3 rounded-sm bg-[#EEF4FF] w-[130px] font-medium mb-2">NOT APPLIED</p>
-                    <p class="notes">Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide.</p>
+                    <p class="status py-2 px-3 rounded-sm bg-[#EEF4FF] w-[130px] font-medium mb-2">${interview.status}</p>
+                    <p class="notes">${interview.notes}</p>
                 </div>
                 <div class="flex gap-2">
-                    <button class="border border-[#10B981] text-[#10B981] font-semibold rounded-sm px-3 py-2" id="interview-btn">Interview</button>
-                    <button class="border border-[#EF4444] text-[#EF4444] font-semibold rounded-sm px-3 py-2" id="rejected-btn">Rejected</button>
+                    <button class="border border-[#10B981] text-[#10B981] font-semibold rounded-sm px-3 py-2 interview-btn">Interview</button>
+                    <button class="border border-[#EF4444] text-[#EF4444] font-semibold rounded-sm px-3 py-2 rejected-btn">Rejected</button>
                 </div>
             </div>
         `
+        filteredSection.appendChild(div);
+    }
+}
+
+function renderRejected() {
+    filteredSection.innerHTML = '';
+    for (let rejected of rejectedList) {
+        console.log(rejected)
+        let div = document.createElement('div');
+        div.className = 'full-card p-6 bg-white border border-[#F1F2F4] rounded-lg'
+        div.innerHTML = `
+        <div>
+                <div class="flex justify-between">
+                    <div>
+                        <h2 class="text-[#002C5C] font-semibold text-[18px] pb-1 card-h">${rejected.cardH}</h2>
+                        <p class="text-[#64748B] card-p">${rejected.cardP}</p>
+                    </div>
+                    <button id="delete-btn" class="w-10 h-10 flex items-center justify-center border rounded-full border-[#F1F2F4]"><i class="fa-regular fa-trash-can text-[#64748B]"></i></button>
+                </div>
+                <div class="py-5 text-[#64748B]">
+                    <p class="job-type">${rejected.jobType}</p>
+                </div>
+                <div class="mb-5">
+                    <p class="status py-2 px-3 rounded-sm bg-[#EEF4FF] w-[130px] font-medium mb-2">${rejected.status}</p>
+                    <p class="notes">${rejected.notes}</p>
+                </div>
+                <div class="flex gap-2">
+                    <button class="border border-[#10B981] text-[#10B981] font-semibold rounded-sm px-3 py-2 interview-btn">Interview</button>
+                    <button class="border border-[#EF4444] text-[#EF4444] font-semibold rounded-sm px-3 py-2 rejected-btn">Rejected</button>
+                </div>
+            </div>
+        `
+        filteredSection.appendChild(div);
     }
 }
