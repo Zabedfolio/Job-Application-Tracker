@@ -23,19 +23,21 @@ const mainContainer = document.querySelector('main');
 function calculateCount() {
     // let total = allCardSection.children.length;
     total.innerText = allCardSection.children.length;
-    countJobs.innerText = allCardSection.children.length;
-    interviewCount.innerText = interviewList.length;
-    rejectedCount.innerText = rejectedList.length;
+    // countJobs.innerText = allCardSection.children.length;
+    
 
     if (currentStatus === 'interview-filter-btn') {
-        countJobs.innerText = `${interviewList.length} of ${totalJobs}`;
+        countJobs.innerText = `${interviewList.length} of ${allCardSection.children.length}`;
     } 
     else if (currentStatus === 'rejected-filter-btn') {
-        countJobs.innerText = `${rejectedList.length} of ${totalJobs}`;
+        countJobs.innerText = `${rejectedList.length} of ${allCardSection.children.length}`;
     } 
     else {
         countJobs.innerText = totalJobs;
     }
+
+    interviewCount.innerText = interviewList.length;
+    rejectedCount.innerText = rejectedList.length;
 }
 
 
@@ -113,9 +115,6 @@ mainContainer.addEventListener('click', function (event) {
             renderRejected();
         }
         calculateCount();
-
-        
-
         
         // console.log(interviewList)
     }else if (event.target.classList.contains('rejected-btn')) {
@@ -152,12 +151,34 @@ mainContainer.addEventListener('click', function (event) {
             renderInterview();
         }
         calculateCount();
-
-        
-
         // renderInterview();
     
         // console.log(interviewList)
+    }
+    else if(event.target.closest('#delete-btn')){
+        const card = event.target.closest('.full-card');
+        if(!card){
+            return;
+        }
+        const title = card.querySelector('.card-h')?.innerText.trim();
+        if(!title){
+            return;
+        }
+
+        card.remove();
+
+        interviewList = interviewList.filter(item => item.cardH.trim() !== title);
+        rejectedList = rejectedList.filter(item => item.cardH.trim() !== title);
+
+        if(currentStatus === 'interview-filter-btn'){
+            renderInterview();
+        } else if(currentStatus === 'rejected-filter-btn'){
+            renderRejected();
+        }
+
+        calculateCount();
+
+        
     }
 })
 
