@@ -49,10 +49,16 @@
             <button onclick="toggleStyle('rejected-filter-btn')" id="rejected-filter-btn" class="py-2.5 px-8 bg-white text-[12px] text-[#64748B] rounded-sm font-medium">Rejected</button>
         </div>
 
+        <!-- filtered card -->
+         <section id="filtered-section">
+
+         </section>
+
         <section id="all-cards" class="space-y-4">
 
             <!-- card-1 -->
         <div class="full-card p-6 bg-white border border-[#F1F2F4] rounded-lg">
+            <div>
                 <div class="flex justify-between">
                     <div>
                         <h2 class="text-[#002C5C] font-semibold text-[18px] pb-1 card-h">Mobile First Corp</h2>
@@ -68,32 +74,37 @@
                     <p class="notes">Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide.</p>
                 </div>
                 <div class="flex gap-2">
-                    <button class="border border-[#10B981] text-[#10B981] font-semibold rounded-sm px-3 py-2" id="interview-btn">Interview</button>
-                    <button class="border border-[#EF4444] text-[#EF4444] font-semibold rounded-sm px-3 py-2" id="rejected-btn">Rejected</button>
+                    <button class="border border-[#10B981] text-[#10B981] font-semibold rounded-sm px-3 py-2 interview-btn" id="interview-btn">Interview</button>
+                    <button class="border border-[#EF4444] text-[#EF4444] font-semibold rounded-sm px-3 py-2 rejected-btn" id="rejected-btn">Rejected</button>
                 </div>
+            </div>
+                
+        </div>
+            <!-- card-2 -->
+        <div class="full-card p-6 bg-white border border-[#F1F2F4] rounded-lg">
+            <div>
+                <div class="flex justify-between">
+                    <div>
+                        <h2 class="text-[#002C5C] font-semibold text-[18px] pb-1 card-h">Mobile First Corp</h2>
+                        <p class="text-[#64748B] card-p">React Native Developer</p>
+                    </div>
+                    <button id="delete-btn" class="w-10 h-10 flex items-center justify-center border rounded-full border-[#F1F2F4]"><i class="fa-regular fa-trash-can text-[#64748B]"></i></button>
+                </div>
+                <div class="py-5 text-[#64748B]">
+                    <p class="job-type">Remote  • Full-time  • $130,000 - $175,000</p>
+                </div>
+                <div class="mb-5">
+                    <p class="status py-2 px-3 rounded-sm bg-[#EEF4FF] w-[130px] font-medium mb-2">NOT APPLIED</p>
+                    <p class="notes">Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide.</p>
+                </div>
+                <div class="flex gap-2">
+                    <button class="border border-[#10B981] text-[#10B981] font-semibold rounded-sm px-3 py-2 interview-btn" id="interview-btn">Interview</button>
+                    <button class="border border-[#EF4444] text-[#EF4444] font-semibold rounded-sm px-3 py-2 rejected-btn" id="rejected-btn">Rejected</button>
+                </div>
+            </div>
+                
         </div>
 
-        <!-- card-2 -->
-        <div class="full-card p-6 bg-white border border-[#F1F2F4] rounded-lg">
-            <div class="flex justify-between">
-                <div>
-                    <h2 class="text-[#002C5C] font-semibold text-[18px] pb-1 card-h">Mobile First Corp</h2>
-                    <p class="text-[#64748B] card-p">React Native Developer</p>
-                </div>
-                <button id="delete-btn" class="w-10 h-10 flex items-center justify-center border rounded-full border-[#F1F2F4]"><i class="fa-regular fa-trash-can text-[#64748B]"></i></button>
-            </div>
-            <div class="py-5 text-[#64748B]">
-                <p class="job-type">Remote  • Full-time  • $130,000 - $175,000</p>
-            </div>
-            <div class="mb-5">
-                <p class="status py-2 px-3 rounded-sm bg-[#EEF4FF] w-[130px] font-medium mb-2">NOT APPLIED</p>
-                <p class="notes">Build cross-platform mobile applications using React Native. Work on products used by millions of users worldwide.</p>
-            </div>
-            <div class="flex gap-2">
-                <button class="border border-[#10B981] text-[#10B981] font-semibold rounded-sm px-3 py-2" id="interview-btn">Interview</button>
-                <button class="border border-[#EF4444] text-[#EF4444] font-semibold rounded-sm px-3 py-2" id="rejected-btn">Rejected</button>
-            </div>
-        </div>
         </section>
 
         
